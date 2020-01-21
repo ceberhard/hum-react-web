@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Input from '../components/input';
+import TextArea from '../components/textarea';
 
 class AddTaskForm extends Component {
     constructor(props) {
@@ -8,11 +9,15 @@ class AddTaskForm extends Component {
 
         this.state = {
             newTask: {
+              id: 0,
               title: '',
+              description: '',
+              status: 'backlog',
             }
         }
 
         this.handleInput = this.handleInput.bind(this);
+        this.handleTextArea = this.handleTextArea.bind(this);
     }
 
     handleInput(e) {
@@ -24,6 +29,15 @@ class AddTaskForm extends Component {
         }), () => console.log(this.state.newTask));
     }
 
+    handleTextArea(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            newTask: {
+                ...prevState.newTask, description: value
+            }
+        }), ()=>console.log(this.state.newTask));
+    }
+
     render() {
         return (
             <form className="container">
@@ -33,6 +47,13 @@ class AddTaskForm extends Component {
                     value={this.state.newTask.title}
                     placeholder={'Enter Task Title'} 
                     handleChange={this.handleInput} />
+                <TextArea title={'Task Description'}
+                    name={'description'}
+                    rows={4}
+                    cols={80}
+                    value={this.state.newTask.description}
+                    placeholder={'Enter Task Description'}
+                    handleChange={this.handleTextArea} />
             </form>
         )
     }
