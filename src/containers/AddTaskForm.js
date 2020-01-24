@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Input from '../components/input';
 import TextArea from '../components/textarea';
+import Button from '../components/button';
 
 class AddTaskForm extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class AddTaskForm extends Component {
 
         this.handleInput = this.handleInput.bind(this);
         this.handleTextArea = this.handleTextArea.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     handleInput(e) {
@@ -38,6 +40,26 @@ class AddTaskForm extends Component {
         }), ()=>console.log(this.state.newTask));
     }
 
+    handleFormSubmit(e) {
+        e.preventDefault();
+
+        let taskData = this.state.newTask;
+
+        fetch('https://localhost:5001/api/v1/task', {
+            method: "PUT",
+            body: JSON.stringify(taskData),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            console.log(response);
+            response.json().then(data => {
+                console.log(data);
+            })
+        });
+    }
+
     render() {
         return (
             <form className="container">
@@ -54,9 +76,17 @@ class AddTaskForm extends Component {
                     value={this.state.newTask.description}
                     placeholder={'Enter Task Description'}
                     handleChange={this.handleTextArea} />
+                <Button title={'Submit'}
+                    action={this.handleFormSubmit}
+                    type={'primary'}
+                    style={buttonStyle} />
             </form>
         )
     }
+}
+
+const buttonStyle = {
+    margin : '10px 10px 10px 10px'
 }
 
 export default AddTaskForm;
