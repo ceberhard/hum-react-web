@@ -1,16 +1,31 @@
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-
-import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 const TaskListRow = (props) => {
+    const columns = [
+        {
+            dataField: 'id',
+            text: 'Task ID',
+            sort: true,
+            headerStyle: { width:"20%" },
+        }, {
+            dataField: 'title',
+            text: 'Title',
+            sort: true,
+            headerStyle: { width:"50%" },
+        }, {
+            dataField: 'status',
+            text: 'Status',
+            sort: true,
+            headerStyle: { width:"50%" },
+        }
+    ];
+
     return (
-        <div>
-            <BootstrapTable data={props.data} striped={true}>
-                <TableHeaderColumn isKey={true} dataField='id'>Task ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='title'>Title</TableHeaderColumn>
-                <TableHeaderColumn dataField='status'>Current Status</TableHeaderColumn>
-            </BootstrapTable>
+        <div className="card">
+            <div className="card-body">
+                <BootstrapTable data={props.data} columns={columns} keyField="id" classes="table table-dark" striped={true} />
+            </div>
         </div>
     );
 }

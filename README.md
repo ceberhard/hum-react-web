@@ -8,4 +8,7 @@ React web application for consuming the Hum Web API.
 4. to run app, type `yarn start`
 5. begin coding
 
-
+## To Do List
+1. Style the Task List Table (implement Emotion library)
+2. Implement an Add Task modal
+3. Implement an Edit Task modal
